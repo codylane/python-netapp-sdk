@@ -49,24 +49,24 @@ if __name__ == '__main__':
     ws_size = ' '*4
 
     header = '''############################################################################
-    # This module was auto-generated on %s
-    # by using the 'system-api-list' api call from NetApp SDK for python.  
-    # If you make changes to this module it will likely be broken the next time
-    # this file is auto-generated.  If you choose to update this file anyway,
-    # please ensure that you have also updated the generate-api.py script
-    # to include your new changes.
-    #
-    # Also worth mentioning that some of the api calls may not work properly
-    # and that is because there is no way to easily auto-determine what api
-    # calls require additional arguments.  If you find one that is broken,
-    # you may need to manually update this file but that is not recommended.
-    #
-    # The goal of this module is to make it easier to develop code since the
-    # original API requires you to know the exact API calls for interating
-    # with your NetApp appliance.  The other goal of this module is to ensure
-    # you can override it instaed of modifying it directly if you find problems.
-    ############################################################################
-    ''' %(time.ctime())
+# This module was auto-generated on %s
+# by using the 'system-api-list' api call from NetApp SDK for python.  
+# If you make changes to this module it will likely be broken the next time
+# this file is auto-generated.  If you choose to update this file anyway,
+# please ensure that you have also updated the generate-api.py script
+# to include your new changes.
+#
+# Also worth mentioning that some of the api calls may not work properly
+# and that is because there is no way to easily auto-determine what api
+# calls require additional arguments.  If you find one that is broken,
+# you may need to manually update this file but that is not recommended.
+#
+# The goal of this module is to make it easier to develop code since the
+# original API requires you to know the exact API calls for interating
+# with your NetApp appliance.  The other goal of this module is to ensure
+# you can override it instaed of modifying it directly if you find problems.
+############################################################################
+''' %(time.ctime())
     print(header)
     print('')
     print('import sys')
