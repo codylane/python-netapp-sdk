@@ -6,6 +6,10 @@ Pre-Conditions
 ==============
 Because the NetAPP SDK is a licensed product, I'm not able to provide the SDK here.  Instead you will need to download the NetApp Manageability SDK from support.netapp.com and uzip it to your location of choice.  Once you have the Netapp Manageability SDK downloaded and uzipped you also need to remember the path to where you unzipped this archive.  You will need to setup `PYTHONPATH` environment to the location of your unzipped archive later. 
 
+* You must also ensure that the username passed to this script is part of the
+  `admin` group in your Netapp console. Otherwise you will
+ get permission denied errors.
+
 NOTES
 =====
 This was tested against SDK version `netapp-manageability-sdk-5.3`
