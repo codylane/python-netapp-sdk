@@ -19,4 +19,7 @@ export PYTHONPATH=~/netapp-manageability-sdk-5.3/lib/python/NetApp:$PYTHONPATH
 * Next cd into the directory to where you have cloned this repository
 ```
 cd ~/prj/python-netapp-sdk
+pip install -r requirements.txt
+./generate-api.py mynetapp.host.com adminuser adminuser_password >
+netapp_utils.py
 ```
