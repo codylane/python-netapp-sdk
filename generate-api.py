@@ -72,6 +72,7 @@ if __name__ == '__main__':
     print('import sys')
     print('from NaElement import *')
     print('from NaServer import *')
+    print('import xmltodict')
     print('')
 
     print('conn = None')
