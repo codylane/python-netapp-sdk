@@ -6,7 +6,7 @@ import xmltodict
 import time
 
 def usage():
-    print('USAGE: %s <netapp hostname> <username> <password>')
+    print('USAGE: %s <netapp hostname> <username> <password>' %(sys.argv[0]))
     sys.exit(0)
 
 def _invoke_api(conn, *args):
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     api_list = hash.get('results').get('apis').get('system-api-info')
 
-    ws_size = ' '*4
+    ws_indent = ' '*4
 
     header = '''############################################################################
 # This module was auto-generated on %s
@@ -75,33 +75,40 @@ if __name__ == '__main__':
     print('')
 
     print('conn = None')
+    print('timeout = 10')
     print('')
     print('def connect(hostname, user, password, minor_version=1, major_version=21):')
-    print('%sglobal conn' %(ws_size))
-    print('%sconn = NaServer(hostname, minor_version, major_version)' %(ws_size))
-    print("%sconn.set_server_type('filer')" %(ws_size))
-    print("%sconn.set_transport_type('HTTPS')" %(ws_size))
-    print("%sconn.set_port(443)" %(ws_size))
-    print("%sconn.set_style('LOGIN')" %(ws_size))
-    print("%sconn.set_admin_user(user, password)" %(ws_size))
-    print("%sreturn conn" %(ws_size))
+    print('%sglobal conn' %(ws_indent))
+    print('%sconn = NaServer(hostname, minor_version, major_version)' %(ws_indent))
+    print("%sconn.set_server_type('filer')" %(ws_indent))
+    print("%sconn.set_transport_type('HTTPS')" %(ws_indent))
+    print("%sconn.set_port(443)" %(ws_indent))
+    print("%sconn.set_style('LOGIN')" %(ws_indent))
+    print("%sconn.set_admin_user(user, password)" %(ws_indent))
+    print("%sconn.set_timeout(timeout)" %(ws_indent))
+    print("%sreturn conn" %(ws_indent))
     print('')
 
     for api in api_list:
         api_call = api.get('name')
         api_function = api_call.replace('-','_')
 
-        print('def %s():' %(api_function))
-        print("%sapi_call = _invoke_api('%s')" %(ws_size, api_call))
-        print('%sreturn api_call' %(ws_size))
+        print('def %s(*args):' %(api_function))
+        print('%sif args:' %(ws_indent))
+        print("%s%sapi_call = _invoke_api('%s', *args)" %(ws_indent, ws_indent, api_call))
+        print('%selse:' %(ws_indent))
+        print("%s%sapi_call = _invoke_api('%s')" %(ws_indent, ws_indent, api_call))
+        print('%sreturn api_call' %(ws_indent))
         print('')
 
     print('def _invoke_api(*args):')
-    print('%sapi = NaElement(*args)' %(ws_size))
-    print('%scall = conn.invoke_elem(api)' %(ws_size))
-    print('%sif call.results_errno() != 0:' %(ws_size))
-    print("%s%sraise IOError('Failed api call=%%s, errno=%%s, desc=%%s'" %(ws_size, ws_size))
-    print("%s%s%s%%(args, call.results_errno(), call.sprintf())" %(ws_size, ws_size, ws_size))
-    print("%s%s)" %(ws_size, ws_size))
-    print("%sreturn call" %(ws_size))
-
+    print('%sapi = NaElement(*args)' %(ws_indent))
+    print('%scall = conn.invoke_elem(api)' %(ws_indent))
+    print('%sif call.results_errno() != 0:' %(ws_indent))
+    print("%s%sraise IOError('Failed api call=%%s, errno=%%s, desc=%%s'" %(ws_indent, ws_indent))
+    print("%s%s%s%%(args, call.results_errno(), call.sprintf())" %(ws_indent, ws_indent, ws_indent))
+    print("%s%s)" %(ws_indent, ws_indent))
+    print("%sreturn call" %(ws_indent))
+    print('')
+    print('def _xml_to_dict(xml):')
+    print('%sreturn xmltodict.parse(xml)' %(ws_indent))
