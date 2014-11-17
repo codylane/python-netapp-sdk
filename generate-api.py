@@ -95,10 +95,7 @@ if __name__ == '__main__':
         api_function = api_call.replace('-','_')
 
         print('def %s(*args):' %(api_function))
-        print('%sif args:' %(ws_indent))
-        print("%s%sapi_call = _invoke_api('%s', *args)" %(ws_indent, ws_indent, api_call))
-        print('%selse:' %(ws_indent))
-        print("%s%sapi_call = _invoke_api('%s')" %(ws_indent, ws_indent, api_call))
+        print("%sapi_call = _invoke_api('%s', *args)" %(ws_indent, api_call))
         print('%sreturn api_call' %(ws_indent))
         print('')
 
