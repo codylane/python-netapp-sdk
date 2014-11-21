@@ -63,8 +63,7 @@ _xml = _lun_stats_call.sprintf()
 
 _lun_stats_dict = xml_to_dict(_xml)
 
-_lun_stats_list =
-_lun_stats_dict.get('results').get('lun-stats').get('lun-stats-info')
+_lun_stats_list = _lun_stats_dict.get('results').get('lun-stats').get('lun-stats-info')
 for _lun in _lun_stats_list:
     _no_unicode_dict = normalize_unicode(_lun)
     print(_no_unicode_dict)
