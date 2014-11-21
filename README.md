@@ -73,7 +73,7 @@ EOF
 And the executed result would look something like this:
 
 ```
-./test.py
+python ./test.py
 {'last-zeroed': '17744171', 'block-size': '512', 'write-ops':
 '4931526577', 'write-blocks': '102771697989', 'other-ops': '3858813',
 'path': '/vol/vol01/lun01', 'read-blocks': '61399766772',
