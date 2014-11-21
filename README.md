@@ -44,23 +44,47 @@ Once you have the generated module, you can import it as follows for testing in 
 
 This example will show you how to obtain lun stats for everyone LUN on your filer.
 
+
+NOTE: I used variables with _ before them in this example, to not
+pollute the API calls since we imported with a *.  I wouldn't do this
+in production code, but for this example it will work nicely.
 ```
-$ ipython
-In [1]: from netapp_utils import *
-In [2]: from netapp_utils import _xml_to_dict
-In [3]: conn = connect('mynetapp.fqdn', 'adminuser', 'adminpass')
-In [4]: lun_stats = lun_stats_list_info()
-In [5]: lun_stats
-Out[6]: <NaElement.NaElement instance at 0x10f60f878>
-In [7]: xml = lun_stats.sprintf()
-In [8]: lun_stats_dict = _xml_to_dict(xml)
-In [9]: lun_stats_list = lun_stats_dict.get('results').get('lun-stats').get('lun-stats-info')
-In [10]: type(lun_stats_list)
-Out[10]: list
-In [17]: for lun_stat in lun_stats_list:
-   ....:     print(lun_stat)
-   ....:     
-{u'last-zeroed': u'17741072', u'block-size': u'512', u'write-ops': u'4929906238', u'write-blocks': u'102752775069', u'other-ops': u'3858547', u'path': u'/vol/volume01/lun01', u'read-blocks': u'61399577045', u'read-ops': u'701187624'}
-{u'last-zeroed': u'17741072', u'block-size': u'512', u'write-ops': u'3589121881', u'write-blocks': u'62376738778', u'other-ops': u'2856613', u'path': u'/vol/volume02/lun02', u'read-blocks': u'8809654074', u'read-ops': u'210613066'}
-{u'last-zeroed': u'17741072', u'block-size': u'512', u'write-ops': u'936983634', u'write-blocks': u'23812208448', u'other-ops': u'3130975', u'path': u'/vol/volume03/lun03', u'read-blocks': u'7215877586', u'read-ops': u'172634525'}
+cat > test.py << EOF
+#!/usr/bin/env python
+
+from netapp_utils2 import *
+from netapp_utils2 import normalize_unicode
+
+conn = connect('mynetapp.fqdn', 'adminuser', 'adminpass')
+
+_lun_stats_call = lun_stats_list_info()
+
+_xml = _lun_stats_call.sprintf()
+
+_lun_stats_dict = xml_to_dict(_xml)
+
+_lun_stats_list =
+_lun_stats_dict.get('results').get('lun-stats').get('lun-stats-info')
+for _lun in _lun_stats_list:
+    _no_unicode_dict = normalize_unicode(_lun)
+    print(_no_unicode_dict)
+EOF
+```
+
+And the executed result would look something like this:
+
+```
+./test.py
+{'last-zeroed': '17744171', 'block-size': '512', 'write-ops':
+'4931526577', 'write-blocks': '102771697989', 'other-ops': '3858813',
+'path': '/vol/vol01/lun01', 'read-blocks': '61399766772',
+'read-ops': '701198849'}
+{'last-zeroed': '17744171', 'block-size': '512', 'write-ops':
+'3590211758', 'write-blocks': '62391954839', 'other-ops': '2856883',
+'path': '/vol/vol02/lun02', 'read-blocks': '8810635966',
+'read-ops': '210642108'}
+{'last-zeroed': '17744171', 'block-size': '512', 'write-ops':
+'937098977', 'write-blocks': '23816240186', 'other-ops': '3131364',
+'path': '/vol/vol03/lun03', 'read-blocks': '7217757779',
+'read-ops': '172708839'}
 ```
