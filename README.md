@@ -52,8 +52,8 @@ in production code, but for this example it will work nicely.
 cat > test.py << EOF
 #!/usr/bin/env python
 
-from netapp_utils2 import *
-from netapp_utils2 import normalize_unicode
+from netapp_utils import *
+from netapp_utils import normalize_unicode
 
 conn = connect('mynetapp.fqdn', 'adminuser', 'adminpass')
 
